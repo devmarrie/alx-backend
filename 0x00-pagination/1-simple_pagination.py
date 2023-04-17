@@ -18,7 +18,6 @@ def index_range(page: int, page_size: int) -> Tuple[int, int]:
     return first, last
 
 
-
 class Server:
     """Server class to paginate a database of popular baby names.
     """
@@ -50,14 +49,9 @@ class Server:
         assert isinstance(page_size, int) and page_size > 0
         dataset = self.dataset()
 
-        #try fetching the data indexes
+        # try fetching the data indexes
         try:
             indx = index_range(page, page_size)
             return dataset[indx[0]:indx[1]]
         except IndexError:
             return []
-
-
-        
-    
-
