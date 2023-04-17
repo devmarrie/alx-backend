@@ -12,11 +12,13 @@ def index_range(page: int, page_size: int) -> Tuple[int, int]:
     Return:
           A tuple of size two (start index, end_index)
     """
-    values = []
-    if page:
-        for i in range(page_size + 1):
-            values.append(i)
-        return values[0], values[-1]
+    first = 0 
+    last = 0
+    for _ in range(page):
+        first = last
+        last += page_size
+
+    return first, last
     
 
         
