@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Basic dictionary 
+Basic dictionary
 """
 from base_caching import BaseCaching
 
@@ -11,16 +11,16 @@ class BasicCache(BaseCaching):
     Attributes:
               key, item
     Methods:
-            put(), get() 
-    """  
+            put(), get()
+    """
     def put(self, key, item):
         """
         Assigns key to item
         """
-        if key is not None and item  is None:
+        if key is not None and item is None:
             pass
         self.cache_data[key] = item
-    
+
     def get(self, key):
         """
         Displays the item associated with a key.
@@ -30,5 +30,3 @@ class BasicCache(BaseCaching):
             return self.cache_data[key]
         else:
             return None
-        
-         
