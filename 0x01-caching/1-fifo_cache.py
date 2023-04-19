@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-FIFO caching
+FIFO caching which inherits from BaseCaching
 """
 from base_caching import BaseCaching
 
@@ -12,6 +12,9 @@ class FIFOCache(BaseCaching):
             get: assign a key to a value
     """
     def __init__(self):
+        """
+        Initialize the class with the parent's init method
+        """
         super().__init__()
         self.visited = []
 
