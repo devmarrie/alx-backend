@@ -14,8 +14,8 @@ class FIFOCache(BaseCaching):
             pass
         if len(self.cache_data) >= self.MAX_ITEMS:
             keyitr = next(iter(self.cache_data))
-            print(f'DISCARD:{keyitr}')
             del self.cache_data[keyitr]
+            print(f'DISCARD:{keyitr}')
         self.cache_data[key] = item
 
     def get(self, key):
