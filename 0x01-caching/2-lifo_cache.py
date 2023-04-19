@@ -15,6 +15,9 @@ class LIFOCache(BaseCaching):
             get(), post()
     """
     def __init__(self):
+        """
+        Initialize the class with the parent's init method
+        """
         super().__init__()
 
     def put(self, key, item):
