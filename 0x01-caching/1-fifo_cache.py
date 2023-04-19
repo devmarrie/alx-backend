@@ -13,6 +13,7 @@ class FIFOCache(BaseCaching):
     """
     def __init__(self):
         super().__init__()
+        self.visited = []
 
     def put(self, key, item):
         """
@@ -22,9 +23,11 @@ class FIFOCache(BaseCaching):
         if key is None or item is None:
             pass
         if len(self.cache_data) >= self.MAX_ITEMS:
-            keyitr = next(iter(self.cache_data))
+            keyitr = self.visited[0]
             del self.cache_data[keyitr]
+            self.visited.pop(0)
             print(f'DISCARD:{keyitr}')
+        self.visited.append(key)
         self.cache_data[key] = item
 
     def get(self, key):
