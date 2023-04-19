@@ -59,7 +59,7 @@ class Server:
             return dataset[indx[0]:indx[1]]
         except IndexError:
             return []
-        
+
     def get_hyper(self, page: int = 1, page_size: int = 10) -> dict:
         """
         Hypermedia pagination
@@ -68,16 +68,17 @@ class Server:
                page: the current page number
                data: the dataset page (equivalent to return from previous task)
                next_page: number of the next page, None if no next page
-               prev_page: number of the previous page, None if no previous page
-               total_pages: the total number of pages in the dataset as an integer
+               prev_page: number of the previous page,
+                          None if no previous page
+               total_pages: the total number of pages in the dataset
         """
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
         try:
             data = self.get_page(page, page_size)
-            total_pages = len(self.dataset()) // page_size
+            total_pages = int(len(self.dataset()) // page_size)
             next_page = page + 1 if page + 1 <= total_pages else None
-            prev_page = page -1 if page -1 > 1 else None   
+            prev_page = page - 1 if page - 1 > 1 else None
             return {
                 "page_size": page_size,
                 "page": page,
