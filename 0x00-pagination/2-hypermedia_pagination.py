@@ -1,9 +1,25 @@
+#!/usr/bin/env python3
+"""
+Simple pagination
+"""
 import csv
 import math
 from typing import List, Tuple
 
 
-index_range = __import__('0-simple_helper_function').index_range
+def index_range(page: int, page_size: int) -> Tuple[int, int]:
+    """
+    Args:
+         page, page_size
+    Return:
+          A tuple of size two (start index, end_index)
+    """
+    first = 0
+    last = 0
+    for _ in range(page):
+        first = last
+        last += page_size
+    return first, last
 
 
 class Server:
@@ -15,10 +31,7 @@ class Server:
         self.__dataset = None
 
     def dataset(self) -> List[List]:
-        """
-        Reads from csv file and returns the dataset.
-        Returns:
-            List[List]: The dataset.
+        """Cached dataset
         """
         if self.__dataset is None:
             with open(self.DATA_FILE) as f:
@@ -28,51 +41,50 @@ class Server:
 
         return self.__dataset
 
-    @staticmethod
-    def assert_positive_integer_type(value: int) -> None:
-        """
-        Asserts that the value is a positive integer.
-        Args:
-            value (int): The value to be asserted.
-        """
-        assert type(value) is int and value > 0
-
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
         """
-        Returns a page of the dataset.
-        Args:
-            page (int): The page number.
-            page_size (int): The page size.
-        Returns:
-            List[List]: The page of the dataset.
+        We read data from the  dataset function
+         Args:
+         page, page_size
+         Return:
+          A list of size two (start index, end_index)
         """
-        self.assert_positive_integer_type(page)
-        self.assert_positive_integer_type(page_size)
         dataset = self.dataset()
-        start, end = index_range(page, page_size)
-        try:
-            data = dataset[start:end]
-        except IndexError:
-            data = []
-        return data
+        assert isinstance(page, int) and page > 0
+        assert isinstance(page_size, int) and page_size > 0
 
+        # try fetching the data indexes
+        try:
+            indx = index_range(page, page_size)
+            return dataset[indx[0]:indx[1]]
+        except IndexError:
+            return []
+        
     def get_hyper(self, page: int = 1, page_size: int = 10) -> dict:
         """
-        Returns a page of the dataset.
-        Args:
-            page (int): The page number.
-            page_size (int): The page size.
+        Hypermedia pagination
         Returns:
-            List[List]: The page of the dataset.
+               page_size: the length of the returned dataset page
+               page: the current page number
+               data: the dataset page (equivalent to return from previous task)
+               next_page: number of the next page, None if no next page
+               prev_page: number of the previous page, None if no previous page
+               total_pages: the total number of pages in the dataset as an integer
         """
-        total_pages = len(self.dataset()) // page_size + 1
-        data = self.get_page(page, page_size)
-        return {
-            "page": page,
-            "page_size": page_size if page_size <= len(data) else len(data),
-            "total_pages": total_pages,
-            "data": data,
-            "prev_page": page - 1 if page > 1 else None,
-            "next_page": page + 1 if page + 1 <= total_pages else None
-        }
-         
+        assert isinstance(page, int) and page > 0
+        assert isinstance(page_size, int) and page_size > 0
+        try:
+            data = self.get_page(page, page_size)
+            total_pages = len(self.dataset()) // page_size
+            next_page = page + 1 if page + 1 <= total_pages else None
+            prev_page = page -1 if page -1 > 1 else None   
+            return {
+                "page_size": page_size,
+                "page": page,
+                "data": data,
+                "next_page": next_page,
+                "prev_page": prev_page,
+                "total_pages": total_pages
+            }
+        except IndexError:
+            return {}
