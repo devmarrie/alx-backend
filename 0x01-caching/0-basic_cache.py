@@ -17,7 +17,7 @@ class BasicCache(BaseCaching):
         """
         Assigns key to item
         """
-        if key is not None and item is None:
+        if key is  None and item is None:
             pass
         self.cache_data[key] = item
 
