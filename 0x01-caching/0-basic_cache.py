@@ -26,7 +26,7 @@ class BasicCache(BaseCaching):
         Displays the item associated with a key.
         The key should be present in the cache and not None
         """
-        if key is not None and key in self.cache_data:
+        if key is not None and key in BaseCaching.cache_data:
             return self.cache_data[key]
         else:
             return None
