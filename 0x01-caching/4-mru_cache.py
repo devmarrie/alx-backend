@@ -11,6 +11,9 @@ class MRUCache(BaseCaching):
     MRU we need to store recent values
     """
     def __init__(self):
+        """
+        Initialize the class with the parent's init method
+        """
         super().__init__()
         self.mru = []
 
