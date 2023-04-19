@@ -17,4 +17,4 @@ def index_range(page: int, page_size: int) -> Tuple[int, int]:
     for _ in range(page):
         first = last
         last += page_size
-    return first, last
+    return (first, last)
