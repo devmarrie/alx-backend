@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+"""
+Simple pagination
+"""
 import csv
 import math
 from typing import List, Tuple
@@ -45,9 +49,9 @@ class Server:
          Return:
           A list of size two (start index, end_index)
         """
+        dataset = self.dataset()
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
-        dataset = self.dataset()
 
         # try fetching the data indexes
         try:
