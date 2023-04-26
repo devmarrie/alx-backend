@@ -31,7 +31,7 @@ def get_locale():
 @app.route("/", strict_slashes=False)
 def home() -> str:
     """
-    Displays 2  -index.html
+    Displays 2-index.html
     """
     return render_template("2-index.html")
 
