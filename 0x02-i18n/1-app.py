@@ -21,10 +21,10 @@ class Config(object):
 @app.route("/", strict_slashes=False)
 def home() -> str:
     """
-    Displays 2  -index.html
+    Displays 1-index.html
     """
     return render_template("1-index.html")
 
 
 if __name__ == "__main__":
-    app.run(port="5000", host="0.0.0.0", debug=True)
+    app.run()
