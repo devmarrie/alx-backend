@@ -5,9 +5,6 @@ Basic Babel setup
 from flask_babel import Babel
 from flask import Flask, render_template
 
-app = Flask(__name__)
-babel = Babel(app)
-
 
 class Config(object):
     """
@@ -17,6 +14,9 @@ class Config(object):
     BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
 
+app = Flask(__name__)
+app.config.from_object(Config)
+babel = Babel(app)
 
 @app.route("/", strict_slashes=False)
 def home() -> str:
