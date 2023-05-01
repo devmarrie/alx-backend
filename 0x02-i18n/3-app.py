@@ -2,7 +2,7 @@
 """
 Basic Babel setup
 """
-from flask_babel import Babel, gettext as _
+from flask_babel import Babel
 from flask import Flask, render_template, request
 
 
@@ -35,9 +35,7 @@ def home() -> str:
     Translates to user's language
     Then passes it to the web
     """
-    title = _('home_title')
-    header = _('home_header')
-    return render_template("3-index.html", title=title, header=header)
+    return render_template("3-index.html")
 
 
 if __name__ == "__main__":
