@@ -32,7 +32,7 @@ def get_locale():
 def home() -> str:
     """
     Displays 3-index.html
-    Translates to user's language 
+    Translates to user's language
     Then passes it to the web
     """
     title = _('home_title')
