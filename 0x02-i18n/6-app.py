@@ -67,11 +67,11 @@ def before_request():
 @app.route("/", strict_slashes=False)
 def home() -> str:
     """
-    Displays 5-index.html
+    Displays 6-index.html
     Translates to user's language
     Then passes it to the web
     """
-    return render_template("5-index.html")
+    return render_template("6-index.html")
 
 
 if __name__ == "__main__":
