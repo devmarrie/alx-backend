@@ -3,22 +3,26 @@ import { createQueue } from 'kue';
 import { promisify } from 'util';
 import express from 'express';
 
-//create redis client
-const redisClient = createClient();
+const client = createClient();
+const port = 1245;
+let reservationEnabled = true;
+const queue = createQueue();
+const app = express();
 
-redisClient.on('connect', function() {
+
+client.on('connect', function() {
   console.log('Redis client connected to the server');
 });
 
-redisClient.on('error', function (err) {
+client.on('error', function (err) {
   console.log(`Redis client not connected to the server: ${err}`);
 });
 
 //promisify client.get function
-const asyncGet = promisify(redisClient.get).bind(redisClient);
+const asyncGet = promisify(client.get).bind(client);
 
 function reserveSeat(number) {
-  redisClient.set('available_seats', number);
+  client.set('available_seats', number);
 }
 
 async function getCurrentAvailableSeats() {
@@ -26,13 +30,6 @@ async function getCurrentAvailableSeats() {
   return seats;
 }
 
-let reservationEnabled = true;
-
-//create Kue queue
-const queue = createQueue();
-
-//create express app
-const app = express();
 
 app.get('/available_seats', async function (req, res) {
   const availableSeats = await getCurrentAvailableSeats();
@@ -74,8 +71,7 @@ app.get('/process', function (req, res) {
     });
 });
 
-const port = 1245;
 app.listen(port, () => {
     console.log(`app is listening http://localhost:${port}`);
 });
-reserveSeat(50);
+reserveSeat(60);
