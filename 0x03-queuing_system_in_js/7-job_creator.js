@@ -57,7 +57,7 @@ const jobs = [
                         );
                      });
     list_job.on('complete', function() {
-        console.log('Notification job JOB_ID completed');
+        console.log(`Notification job ${list_job.id} completed`);
     }).on('failed', function(errorMessge) {
         console.log(`Notification job ${list_job.id} failed: ${errorMessge}`);
     }).on ('progress', function(progress) {
